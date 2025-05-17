@@ -16,7 +16,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={theme === "light" ? DefaultTheme : DarkTheme}>
-      <Stack>
+      <Stack screenOptions={{ headerTitleStyle: { fontWeight: "bold" } }}>
         <Stack.Screen name="index" options={{ title: "Home" }} />
         <Stack.Screen
           name="workouts/[id]"
