@@ -1,10 +1,11 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet } from "react-native";
+import { ThemeView, ThemedText } from "@/components/ui/Themed";
 
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Home Screen</Text>
-    </View>
+    <ThemeView style={styles.container}>
+      <ThemedText>Home Screen</ThemedText>
+    </ThemeView>
   );
 }
 
