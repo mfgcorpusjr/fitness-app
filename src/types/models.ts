@@ -1,7 +1,7 @@
 export type Workout = {
   id: string;
-  createdAt: Date;
-  finishedAt?: Date;
+  createdAt: string;
+  finishedAt: string | null;
 };
 
 export type Exercise = {
@@ -13,12 +13,12 @@ export type Exercise = {
 export type Set = {
   id: string;
   exerciseId: string;
-  reps?: number;
-  weight?: number;
-  oneRM?: number;
+  reps: number | null;
+  weight: number | null;
+  oneRM: number | null;
 };
 
-export type WorkoutWithExercise = Workout & {
+export type WorkoutWithExercises = Workout & {
   exercises: ExerciseWithSets[];
 };
 

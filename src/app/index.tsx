@@ -1,11 +1,22 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 
-import { ThemeView, ThemedText } from "@/components/ui/Themed";
+import { ThemeView } from "@/components/ui/Themed";
+import AppButton from "@/components/ui/AppButton";
+import WorkoutListItem from "@/components/WorkoutListItem";
+
+import workouts from "@/data/workouts";
 
 export default function HomeScreen() {
   return (
     <ThemeView style={styles.container}>
-      <ThemedText>Hello World</ThemedText>
+      <AppButton text="Start New Workout" />
+
+      <FlatList
+        data={workouts}
+        renderItem={({ item }) => <WorkoutListItem workout={item} />}
+        contentContainerStyle={{ gap: 12 }}
+        showsVerticalScrollIndicator={false}
+      />
     </ThemeView>
   );
 }
@@ -13,5 +24,9 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "transparent",
+    padding: 12,
+    paddingBottom: 0,
+    gap: 12,
   },
 });
