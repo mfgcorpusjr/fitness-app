@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    fontWeight: "600",
+    fontWeight: "700",
     textAlign: "center",
   },
 });

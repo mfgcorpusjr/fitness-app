@@ -1,7 +1,7 @@
 export type Workout = {
   id: string;
   createdAt: string;
-  finishedAt: string | null;
+  finishedAt?: string;
 };
 
 export type Exercise = {
@@ -13,9 +13,9 @@ export type Exercise = {
 export type Set = {
   id: string;
   exerciseId: string;
-  reps: number | null;
-  weight: number | null;
-  oneRM: number | null;
+  reps?: number;
+  weight?: number;
+  oneRM?: number;
 };
 
 export type WorkoutWithExercises = Workout & {

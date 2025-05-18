@@ -7,8 +7,8 @@ import AppCard from "@/components/ui/AppCard";
 
 import { WorkoutWithExercises } from "@/types/models";
 
-import { getWorkoutDuration, getWorkoutWeight } from "@/utils/workout";
-import { getBestSet } from "@/utils/set";
+import { getWorkoutDuration, getWorkoutWeight } from "@/utils/workouts";
+import { getBestSet } from "@/utils/sets";
 
 import Colors from "@/constants/Colors";
 
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "700",
   },
   rowText: {
     fontSize: 16,
@@ -91,6 +91,6 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "700",
   },
 });
