@@ -27,7 +27,7 @@ export default function AppModal({
   const theme = useColorScheme() || "light";
 
   return (
-    <Modal {...rest}>
+    <Modal transparent {...rest}>
       <ThemeView style={styles.overlay}>
         <ThemeView style={[styles.container, containerStyle]}>
           <Ionicons

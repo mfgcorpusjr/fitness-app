@@ -1,9 +1,24 @@
-import { StyleSheet, TextInputProps } from "react-native";
+import {
+  StyleSheet,
+  useColorScheme,
+  TextInput,
+  TextInputProps,
+} from "react-native";
 
-import { ThemeTextInput } from "@/components/ui/Themed";
+import Colors from "@/constants/Colors";
 
 export default function AppTextInput({ ...rest }: TextInputProps) {
-  return <ThemeTextInput {...rest} style={[styles.textInput, rest.style]} />;
+  const theme = useColorScheme() || "light";
+
+  const backgroundColor = Colors[theme].textInputBackground;
+  const color = Colors[theme].text;
+
+  return (
+    <TextInput
+      {...rest}
+      style={[styles.textInput, { backgroundColor, color }, rest.style]}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
