@@ -29,17 +29,12 @@ export default function ExerciseListItem({ exercise }: ExerciseListItemProps) {
                 style={[styles.leftColumn, isBestSet && styles.highlightedRow]}
               >
                 <ThemedText
-                  style={[
-                    styles.text,
-                    styles.index,
-                    isBestSet && styles.highlightedRowText,
-                  ]}
+                  style={[styles.index, isBestSet && styles.highlightedRowText]}
                 >
                   {index + 1}
                 </ThemedText>
                 <ThemedText
                   style={[
-                    styles.text,
                     styles.values,
                     isBestSet && styles.highlightedRowText,
                   ]}
@@ -49,11 +44,7 @@ export default function ExerciseListItem({ exercise }: ExerciseListItemProps) {
               </ThemeView>
 
               <ThemedText
-                style={[
-                  styles.text,
-                  styles.values,
-                  isBestSet && styles.highlightedRowText,
-                ]}
+                style={[styles.values, isBestSet && styles.highlightedRowText]}
               >
                 {set.oneRM ? Math.round(set.oneRM) + " kg" : ""}
               </ThemedText>
@@ -83,13 +74,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 12,
   },
-  text: {
-    fontSize: 16,
-  },
   index: {
+    fontSize: 16,
     color: "grey",
   },
   values: {
+    fontSize: 16,
     fontWeight: "600",
   },
 });
