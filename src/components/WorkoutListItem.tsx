@@ -1,5 +1,6 @@
-import { StyleSheet, useColorScheme } from "react-native";
+import { StyleSheet, useColorScheme, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { Link } from "expo-router";
 import { format } from "date-fns";
 
 import { ThemeView, ThemedText } from "@/components/ui/Themed";
@@ -46,29 +47,33 @@ export default function WorkoutListItem({ workout }: WorkoutListItemProps) {
   };
 
   return (
-    <AppCard title={title} footer={renderFooter()}>
-      <ThemeView style={styles.row}>
-        <ThemedText style={styles.headerText}>Exercise</ThemedText>
-        <ThemedText style={styles.headerText}>Best Set</ThemedText>
-      </ThemeView>
-
-      {workout.exercises.map((exercise) => {
-        const bestSet = getBestSet(exercise.sets);
-
-        return (
-          <ThemeView key={exercise.id} style={styles.row}>
-            <ThemedText style={styles.rowText}>
-              {exercise.sets.length} x {exercise.name}
-            </ThemedText>
-            {bestSet && (
-              <ThemedText style={styles.rowText}>
-                {bestSet.reps} x {bestSet.weight}kg
-              </ThemedText>
-            )}
+    <Link href={`/workouts/${workout.id}`} asChild>
+      <Pressable>
+        <AppCard title={title} footer={renderFooter()}>
+          <ThemeView style={styles.row}>
+            <ThemedText style={styles.headerText}>Exercise</ThemedText>
+            <ThemedText style={styles.headerText}>Best Set</ThemedText>
           </ThemeView>
-        );
-      })}
-    </AppCard>
+
+          {workout.exercises.map((exercise) => {
+            const bestSet = getBestSet(exercise.sets);
+
+            return (
+              <ThemeView key={exercise.id} style={styles.row}>
+                <ThemedText style={styles.rowText}>
+                  {exercise.sets.length} x {exercise.name}
+                </ThemedText>
+                {bestSet && (
+                  <ThemedText style={styles.rowText}>
+                    {bestSet.reps} x {bestSet.weight}kg
+                  </ThemedText>
+                )}
+              </ThemeView>
+            );
+          })}
+        </AppCard>
+      </Pressable>
+    </Link>
   );
 }
 

@@ -1,4 +1,12 @@
-import { differenceInMilliseconds } from "date-fns";
+import {
+  differenceInYears,
+  differenceInMonths,
+  differenceInDays,
+  differenceInHours,
+  differenceInMinutes,
+  differenceInSeconds,
+  differenceInMilliseconds,
+} from "date-fns";
 
 import { ExerciseWithSets } from "@/types/models";
 
@@ -25,4 +33,24 @@ export const getWorkoutWeight = (exercises: ExerciseWithSets[]) => {
     }, 0);
     return exerciseSum + exerciseWeight;
   }, 0);
+};
+
+export const getTimeAgo = (fromDate: string, toDate: string) => {
+  const years = differenceInYears(toDate, fromDate);
+  if (years > 0) return `${years} year${years !== 1 ? "s" : ""} ago`;
+
+  const months = differenceInMonths(toDate, fromDate);
+  if (months > 0) return `${months} month${months !== 1 ? "s" : ""} ago`;
+
+  const days = differenceInDays(toDate, fromDate);
+  if (days > 0) return `${days} day${days !== 1 ? "s" : ""} ago`;
+
+  const hours = differenceInHours(toDate, fromDate);
+  if (hours > 0) return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
+
+  const minutes = differenceInMinutes(toDate, fromDate);
+  if (minutes > 0) return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
+
+  const seconds = differenceInSeconds(toDate, fromDate);
+  return `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
 };

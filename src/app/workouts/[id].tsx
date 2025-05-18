@@ -1,17 +1,46 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
+import { useLocalSearchParams, Redirect } from "expo-router";
+
+import { ThemeView } from "@/components/ui/Themed";
+import ExerciseListItem from "@/components/ExerciseListItem";
+import WorkoutHeader from "@/components/WorkoutHeader";
+
+import workouts from "@/data/workouts";
+
+import { getTimeAgo } from "@/utils/workouts";
 
 export default function WorkoutDetailsScreen() {
+  const { id } = useLocalSearchParams();
+
+  const workout = workouts.find((workout) => workout.id === id);
+
+  if (!workout) {
+    return <Redirect href="/" />;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Workout Details Screen</Text>
-    </View>
+    <ThemeView style={styles.container}>
+      <FlatList
+        data={workout.exercises}
+        renderItem={({ item }) => <ExerciseListItem exercise={item} />}
+        ListHeaderComponent={
+          <WorkoutHeader
+            title="Workout Details"
+            subTitle={getTimeAgo(workout.finishedAt, new Date().toDateString())}
+          />
+        }
+        contentContainerStyle={{ gap: 12 }}
+        showsVerticalScrollIndicator={false}
+      />
+    </ThemeView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: "transparent",
+    padding: 12,
+    paddingBottom: 0,
   },
 });
