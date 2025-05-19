@@ -9,6 +9,7 @@ type WorkoutStore = {
   workouts: WorkoutWithExercises[];
   createWorkout: () => void;
   finishWorkout: () => void;
+  addExercise: (exerciseName: string) => void;
 };
 
 const useWorkoutStore = create<WorkoutStore>()(
@@ -34,6 +35,21 @@ const useWorkoutStore = create<WorkoutStore>()(
           state.currentWorkout.finishedAt = new Date();
           state.workouts.unshift(state.currentWorkout);
           state.currentWorkout = undefined;
+        }
+      });
+    },
+
+    addExercise: (exerciseName: string) => {
+      set((state) => {
+        if (state.currentWorkout) {
+          const exercise = {
+            id: Crypto.randomUUID(),
+            workoutId: state.currentWorkout.id,
+            name: exerciseName,
+            sets: [],
+          };
+
+          state.currentWorkout.exercises.push(exercise);
         }
       });
     },
