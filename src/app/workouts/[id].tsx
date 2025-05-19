@@ -5,13 +5,14 @@ import { ThemeView } from "@/components/ui/Themed";
 import ExerciseListItem from "@/components/ExerciseListItem";
 import WorkoutHeader from "@/components/WorkoutHeader";
 
-import workouts from "@/data/workouts";
+import useWorkoutStore from "@/store/useWorkoutStore";
 
 import { getTimeAgo } from "@/utils/workouts";
 
 export default function WorkoutDetailsScreen() {
   const { id } = useLocalSearchParams();
 
+  const workouts = useWorkoutStore((state) => state.workouts);
   const workout = workouts.find((workout) => workout.id === id);
 
   if (!workout) {
@@ -26,7 +27,7 @@ export default function WorkoutDetailsScreen() {
         ListHeaderComponent={
           <WorkoutHeader
             title="Workout Details"
-            subTitle={getTimeAgo(new Date(workout.finishedAt), new Date())}
+            subTitle={getTimeAgo(new Date(workout.finishedAt!), new Date())}
           />
         }
         contentContainerStyle={{ gap: 12 }}

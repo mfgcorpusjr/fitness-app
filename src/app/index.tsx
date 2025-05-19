@@ -7,10 +7,9 @@ import WorkoutListItem from "@/components/WorkoutListItem";
 
 import useWorkoutStore from "@/store/useWorkoutStore";
 
-import workouts from "@/data/workouts";
-
 export default function HomeScreen() {
   const currentWorkout = useWorkoutStore((state) => state.currentWorkout);
+  const workouts = useWorkoutStore((state) => state.workouts);
   const createWorkout = useWorkoutStore((state) => state.createWorkout);
 
   const workoutButtonText = currentWorkout
