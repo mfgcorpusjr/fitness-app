@@ -4,7 +4,7 @@ import {
   Platform,
   FlatList,
 } from "react-native";
-import { Stack } from "expo-router";
+import { Stack, Redirect } from "expo-router";
 import { useHeaderHeight } from "@react-navigation/elements";
 
 import { ThemeView } from "@/components/ui/Themed";
@@ -14,11 +14,17 @@ import WorkoutHeader from "@/components/WorkoutHeader";
 import WorkoutTimer from "@/components/WorkoutTimer";
 import ExercisesListModal from "@/components/ExercisesListModal";
 
-import workouts from "@/data/workouts";
-const workout = workouts[0];
+import useWorkoutStore from "@/store/useWorkoutStore";
 
 export default function CurrentWorkoutScreen() {
+  const currentWorkout = useWorkoutStore((state) => state.currentWorkout);
+  const finishWorkout = useWorkoutStore((state) => state.finishWorkout);
+
   const headerHeight = useHeaderHeight();
+
+  if (!currentWorkout) {
+    return <Redirect href="/" />;
+  }
 
   return (
     <KeyboardAvoidingView
@@ -33,6 +39,7 @@ export default function CurrentWorkoutScreen() {
               text="Finish"
               type="link"
               containerStyle={{ padding: 0 }}
+              onPress={finishWorkout}
             />
           ),
         }}
@@ -40,12 +47,14 @@ export default function CurrentWorkoutScreen() {
 
       <ThemeView style={styles.container}>
         <FlatList
-          data={workout.exercises}
+          data={currentWorkout.exercises}
           renderItem={({ item }) => <WorkoutTrackerListItem exercise={item} />}
           ListHeaderComponent={
             <WorkoutHeader
               title="Workout Tracker"
-              subTitle={<WorkoutTimer from={new Date(workout.createdAt)} />}
+              subTitle={
+                <WorkoutTimer from={new Date(currentWorkout.createdAt)} />
+              }
             />
           }
           ListFooterComponent={<ExercisesListModal />}

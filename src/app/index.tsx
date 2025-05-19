@@ -1,18 +1,33 @@
 import { StyleSheet, FlatList } from "react-native";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 
 import { ThemeView } from "@/components/ui/Themed";
 import AppButton from "@/components/ui/AppButton";
 import WorkoutListItem from "@/components/WorkoutListItem";
 
+import useWorkoutStore from "@/store/useWorkoutStore";
+
 import workouts from "@/data/workouts";
 
 export default function HomeScreen() {
+  const currentWorkout = useWorkoutStore((state) => state.currentWorkout);
+  const createWorkout = useWorkoutStore((state) => state.createWorkout);
+
+  const workoutButtonText = currentWorkout
+    ? "Resume Workout"
+    : "Start New Workout";
+
+  const handleWorkoutButton = () => {
+    if (!currentWorkout) {
+      createWorkout();
+    }
+
+    router.push("/workouts/current");
+  };
+
   return (
     <ThemeView style={styles.container}>
-      <Link href="/workouts/current" asChild>
-        <AppButton text="Start New Workout" />
-      </Link>
+      <AppButton text={workoutButtonText} onPress={handleWorkoutButton} />
 
       <FlatList
         data={workouts}
