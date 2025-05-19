@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   StyleSheet,
   KeyboardAvoidingView,
@@ -14,25 +14,15 @@ import AppModal from "@/components/ui/AppModal";
 import WorkoutTrackerListItem from "@/components/WorkoutTrackerListItem";
 import WorkoutHeader from "@/components/WorkoutHeader";
 import ExercisesList from "@/components/ExercisesList";
-
-import { getWorkoutDuration } from "@/utils/workouts";
+import WorkoutDuration from "@/components/WorkoutDuration";
 
 import workouts from "@/data/workouts";
 const workout = workouts[0];
 
 export default function CurrentWorkoutScreen() {
-  const [timer, setTimer] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const headerHeight = useHeaderHeight();
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer(getWorkoutDuration(new Date(workout.createdAt), new Date()));
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -57,7 +47,10 @@ export default function CurrentWorkoutScreen() {
           data={workout.exercises}
           renderItem={({ item }) => <WorkoutTrackerListItem exercise={item} />}
           ListHeaderComponent={
-            <WorkoutHeader title="Workout Tracker" subTitle={timer} />
+            <WorkoutHeader
+              title="Workout Tracker"
+              subTitle={<WorkoutDuration from={new Date(workout.createdAt)} />}
+            />
           }
           ListFooterComponent={
             <AppButton
