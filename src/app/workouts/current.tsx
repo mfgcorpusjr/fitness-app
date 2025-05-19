@@ -5,6 +5,7 @@ import {
   Platform,
   FlatList,
 } from "react-native";
+import { Stack } from "expo-router";
 import { useHeaderHeight } from "@react-navigation/elements";
 
 import { ThemeView } from "@/components/ui/Themed";
@@ -39,6 +40,18 @@ export default function CurrentWorkoutScreen() {
       keyboardVerticalOffset={headerHeight}
       style={{ flex: 1 }}
     >
+      <Stack.Screen
+        options={{
+          headerRight: () => (
+            <AppButton
+              text="Finish"
+              type="link"
+              containerStyle={{ padding: 0 }}
+            />
+          ),
+        }}
+      />
+
       <ThemeView style={styles.container}>
         <FlatList
           data={workout.exercises}
