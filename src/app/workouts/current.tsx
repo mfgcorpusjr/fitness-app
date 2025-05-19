@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, FlatList } from "react-native";
+import {
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  FlatList,
+} from "react-native";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 import { ThemeView } from "@/components/ui/Themed";
 import AppButton from "@/components/ui/AppButton";
@@ -17,6 +23,8 @@ export default function CurrentWorkoutScreen() {
   const [timer, setTimer] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  const headerHeight = useHeaderHeight();
+
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer(getWorkoutDuration(new Date(workout.createdAt), new Date()));
@@ -26,31 +34,37 @@ export default function CurrentWorkoutScreen() {
   }, []);
 
   return (
-    <ThemeView style={styles.container}>
-      <FlatList
-        data={workout.exercises}
-        renderItem={({ item }) => <WorkoutTrackerListItem exercise={item} />}
-        ListHeaderComponent={
-          <WorkoutHeader title="Workout Tracker" subTitle={timer} />
-        }
-        ListFooterComponent={
-          <AppButton
-            text="Add Exercise"
-            onPress={() => setIsModalVisible(true)}
-          />
-        }
-        contentContainerStyle={{ gap: 12 }}
-        showsVerticalScrollIndicator={false}
-      />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={headerHeight}
+      style={{ flex: 1 }}
+    >
+      <ThemeView style={styles.container}>
+        <FlatList
+          data={workout.exercises}
+          renderItem={({ item }) => <WorkoutTrackerListItem exercise={item} />}
+          ListHeaderComponent={
+            <WorkoutHeader title="Workout Tracker" subTitle={timer} />
+          }
+          ListFooterComponent={
+            <AppButton
+              text="Add Exercise"
+              onPress={() => setIsModalVisible(true)}
+            />
+          }
+          contentContainerStyle={{ gap: 12 }}
+          showsVerticalScrollIndicator={false}
+        />
 
-      <AppModal
-        visible={isModalVisible}
-        title="Select exercise"
-        onClose={() => setIsModalVisible(false)}
-      >
-        <ExercisesList />
-      </AppModal>
-    </ThemeView>
+        <AppModal
+          visible={isModalVisible}
+          title="Select exercise"
+          onClose={() => setIsModalVisible(false)}
+        >
+          <ExercisesList />
+        </AppModal>
+      </ThemeView>
+    </KeyboardAvoidingView>
   );
 }
 
