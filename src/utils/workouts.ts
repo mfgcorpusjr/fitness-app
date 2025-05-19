@@ -10,7 +10,10 @@ import {
 
 import { ExerciseWithSets } from "@/types/models";
 
-export const getWorkoutDuration = (startDate: string, endDate: string) => {
+export const getWorkoutDuration = (
+  startDate: string | Date,
+  endDate: string | Date
+) => {
   const diffMs = differenceInMilliseconds(endDate, startDate);
 
   const totalSeconds = Math.floor(diffMs / 1000);

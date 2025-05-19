@@ -23,7 +23,7 @@ export default function AppTextInput({ ...rest }: TextInputProps) {
 
 const styles = StyleSheet.create({
   textInput: {
-    padding: 12,
-    fontSize: 18,
+    padding: 10,
+    fontSize: 16,
   },
 });

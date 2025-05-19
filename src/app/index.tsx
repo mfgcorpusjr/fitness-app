@@ -1,4 +1,5 @@
 import { StyleSheet, FlatList } from "react-native";
+import { Link } from "expo-router";
 
 import { ThemeView } from "@/components/ui/Themed";
 import AppButton from "@/components/ui/AppButton";
@@ -9,7 +10,9 @@ import workouts from "@/data/workouts";
 export default function HomeScreen() {
   return (
     <ThemeView style={styles.container}>
-      <AppButton text="Start New Workout" />
+      <Link href="/workouts/current" asChild>
+        <AppButton text="Start New Workout" />
+      </Link>
 
       <FlatList
         data={workouts}
