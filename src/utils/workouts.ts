@@ -10,10 +10,7 @@ import {
 
 import { ExerciseWithSets } from "@/types/models";
 
-export const getWorkoutDuration = (
-  startDate: string | Date,
-  endDate: string | Date
-) => {
+export const getWorkoutDuration = (startDate: Date, endDate: Date) => {
   const diffMs = differenceInMilliseconds(endDate, startDate);
 
   const totalSeconds = Math.floor(diffMs / 1000);
@@ -38,7 +35,7 @@ export const getWorkoutWeight = (exercises: ExerciseWithSets[]) => {
   }, 0);
 };
 
-export const getTimeAgo = (fromDate: string, toDate: string) => {
+export const getTimeAgo = (fromDate: Date, toDate: Date) => {
   const years = differenceInYears(toDate, fromDate);
   if (years > 0) return `${years} year${years !== 1 ? "s" : ""} ago`;
 

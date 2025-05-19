@@ -5,11 +5,11 @@ import { ThemedText } from "@/components/ui/Themed";
 
 import { getWorkoutDuration } from "@/utils/workouts";
 
-type WorkoutDurationProps = {
-  from: string | Date;
+type WorkoutTimerProps = {
+  from: Date;
 };
 
-export default function WorkoutDuration({ from }: WorkoutDurationProps) {
+export default function WorkoutTimer({ from }: WorkoutTimerProps) {
   const [timer, setTimer] = useState("");
 
   useEffect(() => {

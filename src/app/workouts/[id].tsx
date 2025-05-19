@@ -26,7 +26,7 @@ export default function WorkoutDetailsScreen() {
         ListHeaderComponent={
           <WorkoutHeader
             title="Workout Details"
-            subTitle={getTimeAgo(workout.finishedAt, new Date().toDateString())}
+            subTitle={getTimeAgo(new Date(workout.finishedAt), new Date())}
           />
         }
         contentContainerStyle={{ gap: 12 }}

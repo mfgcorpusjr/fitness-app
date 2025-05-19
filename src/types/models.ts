@@ -1,7 +1,7 @@
 export type Workout = {
   id: string;
-  createdAt: string;
-  finishedAt?: string;
+  createdAt: Date;
+  finishedAt?: Date;
 };
 
 export type Exercise = {

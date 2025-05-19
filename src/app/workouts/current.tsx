@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   StyleSheet,
   KeyboardAvoidingView,
@@ -10,18 +9,15 @@ import { useHeaderHeight } from "@react-navigation/elements";
 
 import { ThemeView } from "@/components/ui/Themed";
 import AppButton from "@/components/ui/AppButton";
-import AppModal from "@/components/ui/AppModal";
 import WorkoutTrackerListItem from "@/components/WorkoutTrackerListItem";
 import WorkoutHeader from "@/components/WorkoutHeader";
-import ExercisesList from "@/components/ExercisesList";
-import WorkoutDuration from "@/components/WorkoutDuration";
+import WorkoutTimer from "@/components/WorkoutTimer";
+import ExercisesListModal from "@/components/ExercisesListModal";
 
 import workouts from "@/data/workouts";
 const workout = workouts[0];
 
 export default function CurrentWorkoutScreen() {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
   const headerHeight = useHeaderHeight();
 
   return (
@@ -49,26 +45,13 @@ export default function CurrentWorkoutScreen() {
           ListHeaderComponent={
             <WorkoutHeader
               title="Workout Tracker"
-              subTitle={<WorkoutDuration from={new Date(workout.createdAt)} />}
+              subTitle={<WorkoutTimer from={new Date(workout.createdAt)} />}
             />
           }
-          ListFooterComponent={
-            <AppButton
-              text="Add Exercise"
-              onPress={() => setIsModalVisible(true)}
-            />
-          }
+          ListFooterComponent={<ExercisesListModal />}
           contentContainerStyle={{ gap: 12 }}
           showsVerticalScrollIndicator={false}
         />
-
-        <AppModal
-          visible={isModalVisible}
-          title="Select exercise"
-          onClose={() => setIsModalVisible(false)}
-        >
-          <ExercisesList />
-        </AppModal>
       </ThemeView>
     </KeyboardAvoidingView>
   );
