@@ -24,6 +24,7 @@ export default function ExercisesListModal() {
 
   const handleSelectExercise = (exerciseName: string) => {
     addExercise(exerciseName);
+    setInput("");
     setIsModalVisible(false);
   };
 
