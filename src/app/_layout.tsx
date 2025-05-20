@@ -5,6 +5,7 @@ import {
   DefaultTheme,
   DarkTheme,
 } from "@react-navigation/native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import Colors from "@/constants/Colors";
 
@@ -16,14 +17,19 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={theme === "light" ? DefaultTheme : DarkTheme}>
-      <Stack screenOptions={{ headerTitleStyle: { fontWeight: "bold" } }}>
-        <Stack.Screen name="index" options={{ title: "Home" }} />
-        <Stack.Screen
-          name="workouts/[id]"
-          options={{ title: "Workout Details" }}
-        />
-        <Stack.Screen name="workouts/current" options={{ title: "Workout" }} />
-      </Stack>
+      <GestureHandlerRootView>
+        <Stack screenOptions={{ headerTitleStyle: { fontWeight: "bold" } }}>
+          <Stack.Screen name="index" options={{ title: "Home" }} />
+          <Stack.Screen
+            name="workouts/[id]"
+            options={{ title: "Workout Details" }}
+          />
+          <Stack.Screen
+            name="workouts/current"
+            options={{ title: "Workout" }}
+          />
+        </Stack>
+      </GestureHandlerRootView>
     </ThemeProvider>
   );
 }
