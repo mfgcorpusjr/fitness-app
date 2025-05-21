@@ -4,9 +4,20 @@ import * as Crypto from "expo-crypto";
 
 import { WorkoutWithExercises, Exercise, Set } from "@/types/models";
 
+import {
+  getCurrentWorkout,
+  getWorkouts,
+  createOrFinishWorkout,
+} from "@/db/workouts";
+
+import { addExercise } from "@/db/exercises";
+
+import { addOrUpdateSet, deleteSet } from "@/db/sets";
+
 type WorkoutStore = {
-  currentWorkout?: WorkoutWithExercises;
+  currentWorkout: WorkoutWithExercises | null;
   workouts: WorkoutWithExercises[];
+  initState: () => void;
   createWorkout: () => void;
   finishWorkout: () => void;
   addExercise: (exerciseName: string) => void;
@@ -17,8 +28,15 @@ type WorkoutStore = {
 
 const useWorkoutStore = create<WorkoutStore>()(
   immer((set) => ({
-    currentWorkout: undefined,
+    currentWorkout: null,
     workouts: [],
+
+    initState: async () => {
+      set({
+        currentWorkout: await getCurrentWorkout(),
+        workouts: await getWorkouts(),
+      });
+    },
 
     createWorkout: () => {
       const workout = {
@@ -30,14 +48,20 @@ const useWorkoutStore = create<WorkoutStore>()(
       set((state) => {
         state.currentWorkout = workout;
       });
+      createOrFinishWorkout(workout);
     },
 
     finishWorkout: () => {
       set((state) => {
         if (state.currentWorkout) {
-          state.currentWorkout.finishedAt = new Date();
-          state.workouts.unshift(state.currentWorkout);
-          state.currentWorkout = undefined;
+          const updatedCurrentWorkout = {
+            ...state.currentWorkout,
+            finishedAt: new Date(),
+          };
+
+          state.workouts.unshift(updatedCurrentWorkout);
+          state.currentWorkout = null;
+          createOrFinishWorkout(updatedCurrentWorkout);
         }
       });
     },
@@ -51,7 +75,9 @@ const useWorkoutStore = create<WorkoutStore>()(
             name: exerciseName,
             sets: [],
           };
+
           state.currentWorkout.exercises.push(exercise);
+          addExercise(exercise);
         }
       });
     },
@@ -67,7 +93,9 @@ const useWorkoutStore = create<WorkoutStore>()(
               id: Crypto.randomUUID(),
               exerciseId: exercise.id,
             };
+
             selectedExercise.sets.push(set);
+            addOrUpdateSet(set);
           }
         }
       });
@@ -95,6 +123,7 @@ const useWorkoutStore = create<WorkoutStore>()(
                 oneRM: weight * reps * 0.0333 + weight,
               };
             }
+            addOrUpdateSet(selectedExercise.sets[index]);
           }
         }
       });
@@ -110,6 +139,7 @@ const useWorkoutStore = create<WorkoutStore>()(
             selectedExercise.sets = selectedExercise.sets.filter(
               (s) => s.id !== exerciseSet.id
             );
+            deleteSet(exerciseSet);
           }
         }
       });
